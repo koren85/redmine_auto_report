@@ -1,62 +1,59 @@
-# plugins/redmine_auto_report/app/views/issues/_contract_work_form.html.erb
-<% if @issue.project.versions.any? %>
-  <div class="splitcontent">
-    <div class="splitcontentleft">
-      <p>
-        <label><%= l(:label_contract_work) %></label>
-        <% contract_works = @issue.fixed_version ? @issue.fixed_version.contract_works.order(:position) : [] %>
-        <%= select_tag 'issue[contract_work_id]',
-                       options_from_collection_for_select(contract_works, :id, :name, @issue.contract_work_id),
-                       include_blank: true,
-                       disabled: contract_works.empty? %>
-      </p>
-    </div>
+<p>
+  <label><%= l(:label_contract_work) %></label>
+  <% contract_works = @issue.fixed_version ? @issue.fixed_version.contract_works.order(:position) : [] %>
+  <%= select_tag 'issue[contract_work_id]',
+                 options_from_collection_for_select(contract_works, :id, :name, @issue.contract_work_id),
+                 include_blank: true,
+                 disabled: contract_works.empty? %>
+</p>
 
-    <div class="splitcontentright">
-      <div id="report_period_fields" <%= 'style="display:none;"' if @issue.contract_work_id.blank? %>>
-        <p>
-          <label><%= l(:label_report_period) %></label>
-          <%= text_field_tag 'issue[report_period]', @issue.report_period, size: 10 %>
-        </p>
+<div id="report_period_fields" <%= 'style="display:none;"' if @issue.contract_work_id.blank? %>>
+  <p>
+    <label><%= l(:label_report_period) %></label>
+    <%= text_field_tag 'issue[report_period]', @issue.report_period, size: 10 %>
+  </p>
 
-        <p>
-          <label><%= l(:label_report_hours) %></label>
-          <%= number_field_tag 'issue[report_hours]', @issue.report_hours, min: 0, step: 0.5 %>
-        </p>
-      </div>
-    </div>
-  </div>
+  <p>
+    <label><%= l(:label_report_hours) %></label>
+    <%= number_field_tag 'issue[report_hours]', @issue.report_hours, min: 0, step: 0.5 %>
+  </p>
+</div>
 
-  <%= javascript_tag do %>
-    $(document).ready(function() {
-    $('#issue_fixed_version_id').change(function() {
-    var versionId = $(this).val();
-    if (versionId) {
-    $.get('<%= contract_works_for_version_path %>', { version_id: versionId }, function(data) {
-    var select = $('#issue_contract_work_id');
-    select.empty();
-    select.append($('<option>'));
-  $.each(data, function(i, work) {
-  select.append($('<option>', {
-  value: work.id,
-  text: work.name
-  }));
-  });
-  select.prop('disabled', false);
-  });
-  } else {
-  $('#issue_contract_work_id').empty().prop('disabled', true);
+<%= javascript_tag do %>
+  $(document).ready(function() {
+  var $versionField = $('#issue_fixed_version_id').closest('p');
+  var $workField = $('#issue_contract_work_id').closest('p');
+  $workField.insertAfter($versionField);
+
+  $('#issue_fixed_version_id').on('change', function() {
+  var versionId = $(this).val();
+  var workSelect = $('#issue_contract_work_id');
+  var projectId = '<%= @project.id %>';
+
+  workSelect.empty().append($('<option value="">'));
+  workSelect.prop('disabled', true);
   $('#report_period_fields').hide();
+
+  if (versionId) {
+  $.ajax({
+  url: '/versions/' + versionId + '/contract_works/for_version',
+  dataType: 'json',
+  success: function(data) {
+  if (data && data.length > 0) {
+  data.forEach(function(work) {
+  workSelect.append(
+  $('<option>').val(work.id).text(work.name)
+  );
+  });
+  workSelect.prop('disabled', false);
+  }
+  }
+  });
   }
   });
 
-  $('#issue_contract_work_id').change(function() {
-  if ($(this).val()) {
-  $('#report_period_fields').show();
-  } else {
-  $('#report_period_fields').hide();
-  }
+  $('#issue_contract_work_id').on('change', function() {
+  $('#report_period_fields').toggle($(this).val() !== '');
   });
   });
-  <% end %>
 <% end %>

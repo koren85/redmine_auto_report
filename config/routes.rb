@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       end
       collection do
         post :sort
+        get :for_version
       end
     end
   end

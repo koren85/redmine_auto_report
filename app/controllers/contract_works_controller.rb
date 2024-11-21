@@ -1,6 +1,6 @@
 # plugins/redmine_auto_report/app/controllers/contract_works_controller.rb
 class ContractWorksController < ApplicationController
-  before_action :find_version
+  before_action :find_version, except: [:for_version]
   before_action :find_work, only: [:edit, :update, :destroy]
   before_action :authorize_global
 
@@ -68,6 +68,12 @@ class ContractWorksController < ApplicationController
     respond_to do |format|
       format.js { head :ok }
     end
+  end
+
+  def for_version
+    @version = Version.find(params[:version_id])
+    @works = @version.contract_works.order(:position).select(:id, :name)
+    render json: @works
   end
 
   private

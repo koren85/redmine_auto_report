@@ -34,6 +34,13 @@ ru:
     label_telegram_bot_token: Токен Telegram бота
     label_telegram_chat_id: ID чата Telegram
 
-    label_total_planned_hours: Всего плановых часов
+
     label_report_period: Отчетный период
     label_report_hours: Часы в отчете
+
+    field_contract_work: Работа по контракту
+    field_report_period: Отчетный период
+    field_report_hours: Часы в отчете
+
+
+    label_total_planned_hours: Всего плановых часов
