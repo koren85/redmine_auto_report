@@ -1,0 +1,37 @@
+<!--# plugins/redmine_auto_report/app/views/contract_works/_issues_form.html.erb-->
+<div class="box">
+  <h3><%= l(:label_related_issues) %></h3>
+
+  <% issues = @version.fixed_issues.where(contract_work_id: [nil, @work.id]) %>
+  <% if issues.any? %>
+    <%= form_tag update_issues_version_contract_work_path(@version, @work), remote: true do %>
+      <table class="list issues">
+        <thead>
+        <tr>
+          <th class="checkbox hide-when-print">
+            <%= check_box_tag 'check_all', '', false, class: 'toggle-selection' %>
+          </th>
+          <th>#</th>
+          <th><%= l(:field_subject) %></th>
+          <th><%= l(:field_status) %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% issues.each do |issue| %>
+          <tr>
+            <td class="checkbox hide-when-print">
+              <%= check_box_tag 'issue_ids[]', issue.id, issue.contract_work_id == @work.id %>
+            </td>
+            <td class="id"><%= link_to issue.id, issue_path(issue) %></td>
+            <td class="subject"><%= issue.subject %></td>
+            <td class="status"><%= issue.status.name %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <p><%= submit_tag l(:button_save), class: 'small' %></p>
+    <% end %>
+  <% else %>
+    <p class="nodata"><%= l(:label_no_data) %></p>
+  <% end %>
+</div>

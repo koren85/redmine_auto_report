@@ -1,0 +1,21 @@
+<table>
+  <tbody>
+  <tr>
+    <th><%= l(:label_telegram_bot_token) %>:</th>
+    <td>
+      <%= text_field_tag 'settings[telegram_bot_token]',
+                         settings['telegram_bot_token'],
+                         size: 50 %>
+    </td>
+  </tr>
+
+  <tr>
+    <th><%= l(:label_telegram_chat_id) %>:</th>
+    <td>
+      <%= text_field_tag 'settings[telegram_chat_id]',
+                         settings['telegram_chat_id'],
+                         size: 30 %>
+    </td>
+  </tr>
+  </tbody>
+</table>

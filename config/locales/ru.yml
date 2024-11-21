@@ -1,0 +1,39 @@
+# plugins/redmine_auto_report/config/locales/ru.yml
+ru:
+    # Заголовки и лейблы
+    label_contract_works: Работы по контракту
+    label_contract_work_new: Добавить работу
+    label_contract_work: Работа по контракту
+    label_no_data: Нет данных
+    label_related_issues: Связанные задачи
+
+    # Поля
+    field_name: Наименование
+    field_planned_hours: Плановые часы
+    field_start_date: Дата начала
+    field_due_date: Дата окончания
+
+    # Кнопки
+    button_edit: Редактировать
+    button_delete: Удалить
+    button_create: Создать
+    button_submit: Сохранить
+    button_cancel: Отмена
+    button_save: Сохранить
+
+    # Уведомления
+    notice_successful_create: Работа успешно создана
+    notice_successful_update: Работа успешно обновлена
+    notice_successful_delete: Работа успешно удалена
+    error_unable_save_work: "Невозможно сохранить работу: %{errors}"
+
+    # Подтверждения
+    text_are_you_sure: Вы уверены?
+
+    # Настройки
+    label_telegram_bot_token: Токен Telegram бота
+    label_telegram_chat_id: ID чата Telegram
+
+    label_total_planned_hours: Всего плановых часов
+    label_report_period: Отчетный период
+    label_report_hours: Часы в отчете

@@ -1,0 +1,3 @@
+$("#work-<%= @work.id %>").remove();
+$(".contract-works .total-hours").replaceWith("<%= j render(partial: 'total_hours') %>");
+$("#flash_notice").html("<%= j l(:notice_successful_delete) %>").show();

@@ -1,0 +1,8 @@
+<% if @work.valid? %>
+$("#work-form").remove();
+$(".contract-works tbody").append("<%= j render(partial: 'work', locals: { work: @work }) %>");
+$(".contract-works .total-hours").replaceWith("<%= j render(partial: 'total_hours') %>");
+$("#flash_notice").html("<%= j l(:notice_successful_create) %>").show();
+<% else %>
+$("#work-form").html("<%= j render(partial: 'form') %>");
+<% end %>

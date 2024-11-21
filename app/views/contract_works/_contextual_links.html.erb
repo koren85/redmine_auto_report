@@ -1,0 +1,6 @@
+<% if version.present? && User.current.allowed_to?(:manage_auto_reports, version.project) %>
+  <%= link_to l(:label_contract_work_new),
+              new_version_contract_work_path(version),
+              class: 'icon icon-add',
+              remote: true %>
+<% end %>

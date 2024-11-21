@@ -1,0 +1,7 @@
+(function() {
+    // Удаляем существующую форму, если она есть
+    $("#work-form").remove();
+
+    // Добавляем новую форму
+    $(".contract-works-list").after("<div id='work-form' class='box'><%= j(render partial: 'form') %></div>");
+})();

@@ -1,0 +1,50 @@
+<div class="contextual">
+  <% if User.current.allowed_to?(:manage_auto_reports, version.project) %>
+    <%= link_to l(:label_contract_work_new),
+                new_version_contract_work_path(version),
+                class: 'icon icon-add',
+                remote: true %>
+  <% end %>
+</div>
+
+<div id="contract-works">
+  <div class="autoscroll">
+    <table class="list contract-works">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th><%= l(:field_name) %></th>
+        <th><%= l(:field_planned_hours) %></th>
+        <th><%= l(:field_start_date) %></th>
+        <th><%= l(:field_due_date) %></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% version.contract_works.order(:position).each do |work| %>
+        <tr id="contract-work-<%= work.id %>" class="contract-work">
+          <td class="position"><%= work.position %></td>
+          <td class="name"><%= work.name %></td>
+          <td class="hours"><%= work.planned_hours %></td>
+          <td class="start-date"><%= format_date(work.start_date) %></td>
+          <td class="due-date"><%= format_date(work.due_date) %></td>
+          <td class="buttons">
+            <% if User.current.allowed_to?(:manage_auto_reports, version.project) %>
+              <%= link_to l(:button_edit),
+                          edit_version_contract_work_path(version, work),
+                          class: 'icon icon-edit',
+                          remote: true %>
+              <%= link_to l(:button_delete),
+                          version_contract_work_path(version, work),
+                          method: :delete,
+                          class: 'icon icon-del',
+                          remote: true,
+                          data: { confirm: l(:text_are_you_sure) } %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

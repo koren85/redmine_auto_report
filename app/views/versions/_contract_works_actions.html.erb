@@ -1,0 +1,9 @@
+<!--# plugins/redmine_auto_report/app/views/versions/_contract_works_actions.html.erb-->
+<div class="contextual">
+  <% if User.current.allowed_to?(:manage_contract_works, @project) %>
+    <%= link_to l(:label_contract_work_new),
+                new_version_contract_work_path(@version),
+                class: 'icon icon-add',
+                remote: true %>
+  <% end %>
+</div>

@@ -1,0 +1,39 @@
+<%= form_for [@version, @work],
+             remote: true,
+             html: {
+               class: 'tabular',
+               id: @work.new_record? ? 'new-work-form' : "edit-work-form-#{@work.id}"
+             } do |f| %>
+  <%= error_messages_for @work %>
+
+  <div class="box">
+    <p>
+      <%= f.label :name, l(:field_name) %><span class="required"> *</span>
+      <%= f.text_field :name, size: 60, required: true %>
+    </p>
+
+    <p>
+      <%= f.label :planned_hours, l(:field_planned_hours) %>
+      <%= f.number_field :planned_hours, min: 0, step: 0.5 %>
+    </p>
+
+    <p>
+      <%= f.label :start_date, l(:field_start_date) %>
+      <%= f.text_field :start_date, size: 10, class: 'date' %>
+      <%= calendar_for('contract_work_start_date') %>
+    </p>
+
+    <p>
+      <%= f.label :due_date, l(:field_due_date) %>
+      <%= f.text_field :due_date, size: 10, class: 'date' %>
+      <%= calendar_for('contract_work_due_date') %>
+    </p>
+  </div>
+
+  <p>
+    <%= f.submit @work.new_record? ? l(:button_create) : l(:button_save),
+                 class: 'button-positive' %>
+    <%= link_to l(:button_cancel), '#',
+                class: 'icon icon-cancel js-cancel-form' %>
+  </p>
+<% end %>
