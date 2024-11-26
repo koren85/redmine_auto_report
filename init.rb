@@ -6,6 +6,7 @@ require_dependency 'auto_report/hooks'
 
 require_dependency 'auto_report/patches'
 
+
 Redmine::Plugin.register :redmine_auto_report do
   name 'Redmine Auto Report plugin'
   author 'Your Name'
@@ -33,9 +34,10 @@ Rails.configuration.to_prepare do
   require_dependency 'version'
   require_dependency 'journal_detail'
   require_dependency 'issue'
+  require_dependency 'issues_controller'
 
   Version.send(:include, AutoReport::VersionPatch)
   JournalDetail.send(:include, AutoReport::JournalDetailPatch)
   Issue.send(:include, AutoReport::IssuePatch)
-
+  IssuesController.send(:include, AutoReport::IssuesControllerPatch)
 end

@@ -103,3 +103,30 @@
     color: #666;
     font-size: 1.2em;
 }
+
+
+.contract-work-details {
+    margin: 5px 0;
+}
+
+.contract-work-details .attribute {
+    padding: 2px 0;
+}
+
+.contract-work-details .label {
+    font-weight: bold;
+    float: left;
+    width: 170px;
+}
+
+.contract-work-details .value {
+    margin-left: 175px;
+}
+
+.contract-work-details .value a {
+    color: #169;
+}
+
+.contract-work-details .value a:hover {
+    text-decoration: underline;
+}
