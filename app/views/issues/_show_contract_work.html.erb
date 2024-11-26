@@ -1,0 +1,36 @@
+<!--# plugins/redmine_auto_report/app/views/issues/_show_contract_work.html.erb-->
+<div class="attribute-group contract-work-details">
+  <% if @issue.contract_work %>
+    <div class="attribute">
+      <div class="label"><%= l(:field_contract_work) %>:</div>
+      <div class="value">
+        <%= link_to @issue.contract_work.name,
+                    version_path(@issue.fixed_version, anchor: "contract-works") %>
+      </div>
+    </div>
+
+    <% if @issue.report_period.present? %>
+      <div class="attribute">
+        <div class="label"><%= l(:field_report_period) %>:</div>
+        <div class="value"><%= @issue.report_period %></div>
+      </div>
+    <% end %>
+
+    <% if @issue.report_hours.present? %>
+      <div class="attribute">
+        <div class="label"><%= l(:field_report_hours) %>:</div>
+        <div class="value"><%= @issue.report_hours %></div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<%= javascript_tag do %>
+  $(document).ready(function() {
+  var $versionField = $('div.fixed-version').closest('.attribute');
+  var $contractWorkDetails = $('.contract-work-details');
+  if ($versionField.length && $contractWorkDetails.length) {
+  $contractWorkDetails.insertAfter($versionField);
+  }
+  });
+<% end %>

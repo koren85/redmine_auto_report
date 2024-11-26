@@ -1,0 +1,57 @@
+<p>
+  <label><%= l(:field_contract_work) %></label>
+  <%= select_tag 'issue[contract_work_id]',
+                 options_from_collection_for_select(available_works, :id, :name),
+                 include_blank: true %>
+</p>
+
+<div id="report_period_fields" style="display:none;">
+  <p>
+    <label><%= l(:field_report_period) %></label>
+    <%= text_field_tag 'issue[report_period]', '', size: 10 %>
+  </p>
+
+  <p>
+    <label><%= l(:field_report_hours) %></label>
+    <%= number_field_tag 'issue[report_hours]', '', min: 0, step: 0.5 %>
+  </p>
+</div>
+
+<%= javascript_tag do %>
+  $(document).ready(function() {
+  // Перемещаем поле работы после поля версии
+  var $contractWorkFields = $('#issue_contract_work_id').closest('p');
+  var $versionField = $('#issue_fixed_version_id').closest('p');
+  $contractWorkFields.insertAfter($versionField);
+
+  $('#issue_fixed_version_id').on('change', function() {
+  var versionId = $(this).val();
+  var workSelect = $('#issue_contract_work_id');
+
+  workSelect.empty().append($('<option value="">'));
+  workSelect.prop('disabled', true);
+  $('#report_period_fields').hide();
+
+  if (versionId) {
+  $.ajax({
+  url: '/versions/' + versionId + '/contract_works/for_version',
+  dataType: 'json',
+  success: function(data) {
+  if (data && data.length > 0) {
+  data.forEach(function(work) {
+  workSelect.append(
+  $('<option>').val(work.id).text(work.name)
+  );
+  });
+  workSelect.prop('disabled', false);
+  }
+  }
+  });
+  }
+  });
+
+  $('#issue_contract_work_id').on('change', function() {
+  $('#report_period_fields').toggle($(this).val() !== '');
+  });
+  });
+<% end %>
