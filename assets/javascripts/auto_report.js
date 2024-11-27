@@ -1,5 +1,5 @@
 $(function() {
-    console.log('Auto Report JS loaded');
+    console.log('Auto Report. JS loaded');
 
     // Обработка клика по кнопке отмены
     $(document).on('click', '.js-cancel-form', function(e) {

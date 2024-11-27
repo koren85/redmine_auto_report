@@ -44,3 +44,43 @@ ru:
 
 
     label_total_planned_hours: Всего плановых часов
+
+    # Статусы отчетов
+    auto_report_status_draft: Черновик
+    auto_report_status_pending: На согласовании
+    auto_report_status_approved: Утвержден
+    auto_report_status_rejected: Отклонен
+
+    # Типы периодов
+    auto_report_period_type_month: Месяц
+    auto_report_period_type_quarter: Квартал
+    auto_report_period_type_custom: Другой
+
+    # Поля отчета
+    field_auto_report_number: Номер
+    field_auto_report_name: Наименование
+    field_auto_report_period_type: Тип периода
+    field_auto_report_period_start: Начало периода
+    field_auto_report_period_end: Конец периода
+    field_auto_report_total_hours: Всего часов
+    field_auto_report_status: Статус
+    field_auto_report_rejection_reason: Причина отклонения
+
+    # Сообщения
+    notice_auto_report_successful_create: Отчет успешно создан
+    notice_auto_report_successful_update: Отчет успешно обновлен
+    notice_auto_report_successful_delete: Отчет успешно удален
+    notice_auto_report_successful_approve: Отчет успешно утвержден
+    notice_auto_report_successful_reject: Отчет отклонен
+
+    # Ошибки
+    error_auto_report_greater_than_start: должна быть позже даты начала
+    error_auto_report_period_outside_version_dates: Период отчета выходит за рамки дат версии
+
+    # Заголовки
+    label_auto_report: Отчет
+    label_auto_report_new: Новый отчет
+    label_auto_report_plural: Отчеты
+    label_auto_report_status: Статус отчета
+
+    label_select_version: Выберите контракт...

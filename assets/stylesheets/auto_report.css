@@ -130,3 +130,26 @@
 .contract-work-details .value a:hover {
     text-decoration: underline;
 }
+
+.auto-reports tr.draft td.status { color: #aaa; }
+.auto-reports tr.pending td.status { color: #f90; }
+.auto-reports tr.approved td.status { color: #090; }
+.auto-reports tr.rejected td.status { color: #e00; }
+
+.auto-reports td.number { text-align: center; }
+.auto-reports td.period-type { text-align: center; }
+.auto-reports td.period-start,
+.auto-reports td.period-end { text-align: center; }
+.auto-reports td.buttons { text-align: right; white-space: nowrap; }
+
+.filters fieldset {
+    padding: 10px;
+    margin-bottom: 15px;
+    background: #f7f7f7;
+    border: 1px solid #e4e4e4;
+}
+
+.filters fieldset legend {
+    font-weight: bold;
+    padding: 0 5px;
+}

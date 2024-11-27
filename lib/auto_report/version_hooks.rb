@@ -1,4 +1,4 @@
-module AutoReport
+module AutoReport.
   module Hooks
     class VersionHooks < Redmine::Hook::ViewListener
       render_on :view_versions_show_bottom,

@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :auto_reports do
+  resources :'reports' do
     member do
       put :approve
       put :reject
