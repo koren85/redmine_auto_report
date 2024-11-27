@@ -1,0 +1,67 @@
+# plugins/redmine_auto_report/app/views/auto_reports/show.html.erb
+<div class="contextual">
+  <% if @report.editable? %>
+    <%= link_to l(:button_edit), edit_auto_report_path(@report), class: 'icon icon-edit' %>
+    <%= link_to l(:button_delete), auto_report_path(@report),
+                method: :delete,
+                class: 'icon icon-del',
+                data: { confirm: l(:text_are_you_sure) } %>
+  <% end %>
+  <% if @report.approvable? %>
+    <%= link_to l(:button_approve), approve_auto_report_path(@report),
+                method: :put,
+                class: 'icon icon-ok' %>
+    <%= link_to l(:button_reject), '#',
+                class: 'icon icon-cancel js-reject-report' %>
+  <% end %>
+</div>
+
+<h2><%= l(:label_auto_report) %> #<%= @report.number %></h2>
+
+<div class="report details">
+  <div class="attributes">
+    <div class="attribute">
+      <div class="label"><%= l(:field_auto_report_name) %>:</div>
+      <div class="value"><%= h @report.name %></div>
+    </div>
+
+    <div class="attribute">
+      <div class="label"><%= l(:field_version) %>:</div>
+      <div class="value">
+        <%= link_to h(@report.version.name), version_path(@report.version) if @report.version %>
+      </div>
+    </div>
+
+    <div class="attribute">
+      <div class="label"><%= l(:field_auto_report_period_type) %>:</div>
+      <div class="value"><%= h @report.period_type_name %></div>
+    </div>
+
+    <div class="attribute">
+      <div class="label"><%= l(:field_auto_report_period_start) %>:</div>
+      <div class="value"><%= format_date(@report.period_start) %></div>
+    </div>
+
+    <div class="attribute">
+      <div class="label"><%= l(:field_auto_report_period_end) %>:</div>
+      <div class="value"><%= format_date(@report.period_end) %></div>
+    </div>
+
+    <div class="attribute">
+      <div class="label"><%= l(:field_auto_report_total_hours) %>:</div>
+      <div class="value"><%= h @report.total_hours %></div>
+    </div>
+
+    <div class="attribute">
+      <div class="label"><%= l(:field_auto_report_status) %>:</div>
+      <div class="value"><%= h @report.status_name %></div>
+    </div>
+
+    <% if @report.rejection_reason.present? %>
+      <div class="attribute">
+        <div class="label"><%= l(:field_auto_report_rejection_reason) %>:</div>
+        <div class="value"><%= h @report.rejection_reason %></div>
+      </div>
+    <% end %>
+  </div>
+</div>

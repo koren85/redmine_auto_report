@@ -1,0 +1,68 @@
+<!--# plugins/redmine_auto_report/app/views/auto_reports/index.html.erb-->
+<div class="contextual">
+  <%= link_to l(:label_auto_report_new),
+              new_report_path,
+              class: 'icon icon-add' %>
+</div>
+
+<h2><%= l(:label_auto_report_plural) %></h2>
+
+<div class="filters">
+  <%= form_tag reports_path, method: :get do %>
+    <fieldset>
+      <legend><%= l(:label_filter_plural) %></legend>
+      <label><%= l(:field_auto_report_status) %>:</label>
+      <%= select_tag 'status',
+                     options_for_select([
+                       ['', ''],
+                       [l(:auto_report_status_draft), 'draft'],
+                       [l(:auto_report_status_pending), 'pending'],
+                       [l(:auto_report_status_approved), 'approved'],
+                       [l(:auto_report_status_rejected), 'rejected']
+                     ], @status) %>
+      <%= submit_tag l(:button_apply), class: 'small' %>
+    </fieldset>
+  <% end %>
+</div>
+
+<% if @reports.any? %>
+  <table class="list auto-reports">
+    <thead>
+      <tr>
+        <%= sort_header_tag('number', caption: l(:field_auto_report_number)) %>
+        <%= sort_header_tag('name', caption: l(:field_auto_report_name)) %>
+        <%= sort_header_tag('period_type', caption: l(:field_auto_report_period_type)) %>
+        <%= sort_header_tag('period_start', caption: l(:field_auto_report_period_start)) %>
+        <%= sort_header_tag('period_end', caption: l(:field_auto_report_period_end)) %>
+        <%= sort_header_tag('status', caption: l(:field_auto_report_status)) %>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @reports.each do |report| %>
+        <tr class="auto-report <%= report.status %>">
+          <td class="number"><%= link_to report.number, auto_report_path(report) %></td>
+          <td class="name"><%= h report.name %></td>
+          <td class="period-type"><%= h report.period_type_name %></td>
+          <td class="period-start"><%= format_date(report.period_start) %></td>
+          <td class="period-end"><%= format_date(report.period_end) %></td>
+          <td class="status"><%= h report.status_name %></td>
+          <td class="buttons">
+            <%= link_to l(:button_edit),
+                       edit_auto_report_path(report),
+                       class: 'icon icon-edit' if report.status == 'draft' %>
+            <%= link_to l(:button_delete),
+                       auto_report_path(report),
+                       method: :delete,
+                       class: 'icon icon-del',
+                       data: { confirm: l(:text_are_you_sure) } if report.status == 'draft' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= pagination_links_full @report_pages, @report_count %>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
