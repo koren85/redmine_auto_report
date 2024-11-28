@@ -41,7 +41,7 @@
     <tbody>
       <% @reports.each do |report| %>
         <tr class="auto-report <%= report.status %>">
-          <td class="number"><%= link_to report.number, auto_report_path(report) %></td>
+          <td class="number"><%= link_to report.number, report_path(report) %></td>
           <td class="name"><%= h report.name %></td>
           <td class="period-type"><%= h report.period_type_name %></td>
           <td class="period-start"><%= format_date(report.period_start) %></td>
@@ -49,10 +49,10 @@
           <td class="status"><%= h report.status_name %></td>
           <td class="buttons">
             <%= link_to l(:button_edit),
-                       edit_auto_report_path(report),
+                       edit_report_path(report),
                        class: 'icon icon-edit' if report.status == 'draft' %>
             <%= link_to l(:button_delete),
-                       auto_report_path(report),
+                       report_path(report),
                        method: :delete,
                        class: 'icon icon-del',
                        data: { confirm: l(:text_are_you_sure) } if report.status == 'draft' %>

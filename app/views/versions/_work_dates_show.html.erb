@@ -1,0 +1,11 @@
+<div class="box">
+  <h3><%= l(:label_work_dates) %></h3>
+  <p>
+    <strong><%= l(:field_work_start_date) %>:</strong>
+    <%= format_date(@version.work_start_date) %>
+  </p>
+  <p>
+    <strong><%= l(:field_work_end_date) %>:</strong>
+    <%= format_date(@version.work_end_date) %>
+  </p>
+</div>

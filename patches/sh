@@ -1,0 +1,2 @@
+# Сохраните патч в файл version_form.patch и добавьте эту команду в Dockerfile или скрипт запуска
+patch -p0 /usr/src/redmine/app/views/versions/_form.html.erb < version_form.patch

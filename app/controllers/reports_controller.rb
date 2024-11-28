@@ -54,7 +54,7 @@ class ReportsController < ApplicationController
 
     if @report.update(report_params)
       flash[:notice] = l(:notice_auto_report_successful_update)
-      redirect_to auto_report_path(@report)
+      redirect_to report_path(@report)
     else
       render :edit
     end
@@ -63,7 +63,7 @@ class ReportsController < ApplicationController
   def destroy
     @report.destroy
     flash[:notice] = l(:notice_auto_report_successful_delete)
-    redirect_to auto_reports_path
+    redirect_to reports_path
   end
 
   def approve
@@ -72,7 +72,7 @@ class ReportsController < ApplicationController
     else
       flash[:error] = l(:error_auto_report_not_approvable)
     end
-    redirect_to auto_report_path(@report)
+    redirect_to report_path(@report)
   end
 
   def reject
@@ -81,7 +81,7 @@ class ReportsController < ApplicationController
     else
       flash[:error] = l(:error_auto_report_not_rejectable)
     end
-    redirect_to auto_report_path(@report)
+    redirect_to report_path(@report)
   end
 
   private

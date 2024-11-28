@@ -1,14 +1,14 @@
-# plugins/redmine_auto_report/app/views/auto_reports/show.html.erb
+<!--# plugins/redmine_auto_report/app/views/auto_reports/show.html.erb-->
 <div class="contextual">
   <% if @report.editable? %>
-    <%= link_to l(:button_edit), edit_auto_report_path(@report), class: 'icon icon-edit' %>
-    <%= link_to l(:button_delete), auto_report_path(@report),
+    <%= link_to l(:button_edit), edit_report_path(@report), class: 'icon icon-edit' %>
+    <%= link_to l(:button_delete), report_path(@report),
                 method: :delete,
                 class: 'icon icon-del',
                 data: { confirm: l(:text_are_you_sure) } %>
   <% end %>
   <% if @report.approvable? %>
-    <%= link_to l(:button_approve), approve_auto_report_path(@report),
+    <%= link_to l(:button_approve), approve_report_path(@report),
                 method: :put,
                 class: 'icon icon-ok' %>
     <%= link_to l(:button_reject), '#',

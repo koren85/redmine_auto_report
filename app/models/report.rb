@@ -18,45 +18,12 @@ class Report < ActiveRecord::Base
 
   before_validation :set_number, on: :create
   before_validation :set_name, if: :version_id_changed?
+  before_validation :set_dates_from_version, if: :version_id_changed?
   before_save :calculate_total_hours
 
   scope :newest_first, -> { order(created_at: :desc) }
   scope :by_status, ->(status) { where(status: status) if status.present? }
 
-  private
-
-  def set_number
-    self.number = (self.class.maximum(:number) || 0) + 1
-  end
-
-  def set_name
-    return unless version
-    self.name = "#{version.project.name} - #{version.name} (#{period_start.strftime('%m.%Y')})"
-  end
-
-  # def calculate_total_hours
-  #   self.total_hours = version.contract_works.sum(:planned_hours) if version
-  # end
-
-  def calculate_total_hours
-    if version
-      self.total_hours = version.total_planned_hours || 0
-    end
-  end
-
-  def period_end_after_start
-    return unless period_start && period_end
-    if period_end < period_start
-      errors.add(:period_end, :greater_than_start)
-    end
-  end
-
-  def period_within_version_dates
-    return unless version && period_start && period_end
-    if version.effective_date && (period_start < version.effective_date || period_end > version.due_date)
-      errors.add(:base, :period_outside_version_dates)
-    end
-  end
 
   def period_type_name
     I18n.t("auto_report_period_type_#{period_type}")
@@ -77,6 +44,43 @@ class Report < ActiveRecord::Base
   def rejectable?
     status == 'pending'
   end
+
+
+  private
+
+  def set_dates_from_version
+    return unless version
+    self.period_start = version.work_start_date if version.work_start_date
+    self.period_end = version.work_end_date if version.work_end_date
+  end
+
+  def set_number
+    self.number = (self.class.maximum(:number) || 0) + 1
+  end
+
+  def set_name
+    return unless version
+    self.name = "#{version.project.name} - #{version.name} (#{period_start.strftime('%m.%Y')})"
+  end
+
+  def calculate_total_hours
+    self.total_hours = version.total_planned_hours if version
+  end
+
+  def period_end_after_start
+    return unless period_start && period_end
+    if period_end < period_start
+      errors.add(:period_end, :greater_than_start)
+    end
+  end
+
+  def period_within_version_dates
+    return unless version && version.work_start_date && version.work_end_date && period_start && period_end
+    if period_start < version.work_start_date || period_end > version.work_end_date
+      errors.add(:base, :period_outside_version_dates)
+    end
+  end
+
 
   def approve!
     return false unless approvable?

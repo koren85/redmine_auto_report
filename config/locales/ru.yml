@@ -84,3 +84,15 @@ ru:
     label_auto_report_status: Статус отчета
 
     label_select_version: Выберите контракт...
+
+    field_work_start_date: Дата начала работ
+    field_work_end_date: Дата завершения работ
+    activerecord:
+        errors:
+            models:
+                version:
+                    attributes:
+                        work_end_date:
+                            greater_than_start_date: должна быть позже даты начала работ
+
+    label_work_dates: Даты выполнения работ

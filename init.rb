@@ -4,6 +4,7 @@ Rails.application.config.eager_load_paths += Dir["#{File.dirname(__FILE__)}/app/
 
 require_dependency 'auto_report'
 # require_dependency 'report'
+ require_dependency 'version'
 require_dependency 'auto_report/hooks/version_hooks'
 require_dependency 'auto_report/hooks/issues_hook'
 require_dependency 'auto_report/hooks'

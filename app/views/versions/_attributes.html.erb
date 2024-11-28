@@ -1,0 +1,30 @@
+# plugins/redmine_auto_report/app/views/versions/_attributes.html.erb
+<%= labelled_fields_for :version, @version do |f| %>
+  <div class="splitcontentleft">
+    <p><%= f.text_field :name, :size => 60, :required => true %></p>
+    <p><%= f.text_field :description, :size => 60 %></p>
+    <p><%= f.select :status, Version::VERSION_STATUSES.collect {|s| [l("version_status_#{s}"), s]} %></p>
+    <p>
+      <%= f.label :work_start_date, l(:field_work_start_date) %><br />
+      <%= f.date_field :work_start_date %>
+    </p>
+    <p>
+      <%= f.label :work_end_date, l(:field_work_end_date) %><br />
+      <%= f.date_field :work_end_date %>
+    </p>
+  </div>
+
+  <div class="splitcontentright">
+    <% if @version.completed? %>
+      <p><%= l(:field_completed) %>: <%= format_date(@version.effective_date) %></p>
+    <% else %>
+      <p><%= f.date_field :effective_date %></p>
+    <% end %>
+    <% if @version.fixed_issues.count > 0 %>
+      <p><%= l(:field_wiki_page) %>: <%= f.text_field :wiki_page_title, :size => 60, :label => :field_wiki_page %></p>
+    <% end %>
+    <% if @version.project.module_enabled?("wiki") %>
+      <p><%= f.check_box :sharing, :label => :field_sharing %></p>
+    <% end %>
+  </div>
+<% end %>
