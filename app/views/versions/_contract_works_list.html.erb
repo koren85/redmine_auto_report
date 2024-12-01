@@ -1,35 +1,30 @@
-<!--# plugins/redmine_auto_report/app/views/versions/_contract_works_list.html.erb-->
 <div class="contract-works box">
   <h3><%= l(:label_contract_works) %></h3>
 
-  <% if User.current.allowed_to?(:manage_contract_works, @project) %>
-    <div class="contextual">
-      <%= link_to l(:label_contract_work_new),
-                  new_version_contract_work_path(@version),
-                  class: 'icon icon-add',
-                  remote: true %>
-    </div>
-  <% end %>
+  <div class="contextual">
+    <%= link_to l(:label_contract_work_new),
+                new_version_contract_work_path(@version),
+                class: 'icon icon-add',
+                remote: true %>
+  </div>
 
   <div class="contract-works-list">
     <% if @version.contract_works.any? %>
-      <%= render partial: 'contract_works/total_hours' %>
-
-      <table class="list contract-works">
+      <p class="total-hours">
+        <%= l(:label_total_planned_hours) %>: <%= @version.total_planned_hours %>
+      </p>
+      <table class="list">
         <thead>
         <tr>
           <th>#</th>
           <th><%= l(:field_name) %></th>
           <th><%= l(:field_planned_hours) %></th>
-          <th><%= l(:field_start_date) %></th>
-          <th><%= l(:field_due_date) %></th>
-          <th><%= l(:label_related_issues) %></th>
           <th></th>
         </tr>
         </thead>
-        <tbody class="sortable" data-url="<%= sort_version_contract_works_path(@version) %>">
+        <tbody>
         <% @version.contract_works.order(:position).each do |work| %>
-          <%= render partial: 'contract_works/work', locals: { work: work } %>
+          <%= render partial: 'versions/contract_work', locals: { work: work, version: @version } %>
         <% end %>
         </tbody>
       </table>

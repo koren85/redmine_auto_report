@@ -3,8 +3,8 @@ module AutoReport
   module Hooks
     class ViewListener < Redmine::Hook::ViewListener
       def view_layouts_base_html_head(context={})
-        stylesheet = stylesheet_link_tag('auto_report', plugin: 'redmine_auto_report')
-        javascript = javascript_include_tag('auto_report', plugin: 'redmine_auto_report')
+        stylesheet = stylesheet_link_tag('auto_report', 'contract_works', plugin: 'redmine_auto_report')
+        javascript = javascript_include_tag('auto_report', 'contract_works', plugin: 'redmine_auto_report')
         "#{stylesheet}\n#{javascript}"
       end
     end

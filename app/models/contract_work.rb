@@ -2,14 +2,25 @@
 class ContractWork < ActiveRecord::Base
   belongs_to :version
   has_many :issues
+  has_one :contract_work_merge
+  has_one :merged_hours, through: :contract_work_merge
 
   validates :name, presence: true
-  validates :planned_hours, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :position, presence: true, numericality: { only_integer: true }
+  validate :hours_validation
 
   before_validation :set_position
 
+  def effective_hours
+    merged_hours&.hours || planned_hours
+  end
+
   private
+
+  def hours_validation
+    return true if planned_hours.present? || group_hours.present?
+    errors.add(:base, :requires_hours)
+  end
 
   def set_position
     if position.nil?

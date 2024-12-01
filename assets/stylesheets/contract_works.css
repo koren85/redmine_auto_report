@@ -1,0 +1,13 @@
+/*# plugins/redmine_auto_report/assets/stylesheets/contract_works.css*/
+.work.selected {
+    background-color: #ffffdd;
+}
+
+.hours.merged {
+    background-color: #e6f3ff;
+}
+
+.work.merged .hours {
+    border-top: 1px solid #c5d5dd;
+    border-bottom: 1px solid #c5d5dd;
+}

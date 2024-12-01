@@ -96,3 +96,13 @@ ru:
                             greater_than_start_date: должна быть позже даты начала работ
 
     label_work_dates: Даты выполнения работ
+    label_hours_type: Тип часов
+    label_individual_hours: Индивидуальные часы
+    label_shared_hours: Общие часы
+    label_shared_hours_new: Добавить общие часы
+    field_hours: часов
+    errors:
+        requires_hours_or_shared: Необходимо указать либо плановые часы, либо общие часы
+    field_work_group: Группа работ
+    field_group_hours: Часы группы
+    label_group: Группа

@@ -1,9 +1,17 @@
-<tr class="work" id="work-<%= work.id %>">
+<tr class="work <%= 'grouped' if work.work_group.present? %>" id="work-<%= work.id %>">
   <td class="position"><%= work.position %></td>
-  <td class="name"><%= h(work.name) %></td>
-  <td class="hours"><%= h(work.planned_hours) %></td>
-  <td class="start-date"><%= format_date(work.start_date) %></td>
-  <td class="due-date"><%= format_date(work.due_date) %></td>
+  <td class="name">
+    <%= h work.name %>
+    <% if work.work_group.present? %>
+      <div class="group-info">
+        <%= l(:label_group) %>: <%= work.work_group %>
+        (<%= work.group_hours %>)
+      </div>
+    <% end %>
+  </td>
+  <td class="hours">
+    <%= work.planned_hours if work.planned_hours.present? %>
+  </td>
   <td class="issues">
     <%= work.issues.count %>
   </td>

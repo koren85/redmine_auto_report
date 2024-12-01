@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :versions do
+    resources :shared_hours, path: 'hours'
     resources :contract_works do
       member do
         post :update_issues
@@ -9,6 +10,7 @@ Rails.application.routes.draw do
         get :for_version
       end
     end
+
   end
 
   resources :'reports' do

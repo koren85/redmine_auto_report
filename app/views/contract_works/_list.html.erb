@@ -1,50 +1,48 @@
+<!--# plugins/redmine_auto_report/app/views/contract_works/_list.html.erb-->
 <div class="contextual">
-  <% if User.current.allowed_to?(:manage_auto_reports, version.project) %>
-    <%= link_to l(:label_contract_work_new),
-                new_version_contract_work_path(version),
-                class: 'icon icon-add',
-                remote: true %>
-  <% end %>
+  <%= link_to l(:button_merge_hours),
+              merge_hours_version_contract_works_path(@version),
+              class: 'icon icon-link merge-hours',
+              style: 'display: none',
+              remote: true %>
+  <%= link_to l(:button_unmerge_hours),
+              unmerge_hours_version_contract_works_path(@version),
+              class: 'icon icon-unlink unmerge-hours',
+              style: 'display: none',
+              remote: true %>
 </div>
 
-<div id="contract-works">
-  <div class="autoscroll">
-    <table class="list contract-works">
-      <thead>
-      <tr>
-        <th>#</th>
-        <th><%= l(:field_name) %></th>
-        <th><%= l(:field_planned_hours) %></th>
-        <th><%= l(:field_start_date) %></th>
-        <th><%= l(:field_due_date) %></th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <% version.contract_works.order(:position).each do |work| %>
-        <tr id="contract-work-<%= work.id %>" class="contract-work">
-          <td class="position"><%= work.position %></td>
-          <td class="name"><%= work.name %></td>
-          <td class="hours"><%= work.planned_hours %></td>
-          <td class="start-date"><%= format_date(work.start_date) %></td>
-          <td class="due-date"><%= format_date(work.due_date) %></td>
-          <td class="buttons">
-            <% if User.current.allowed_to?(:manage_auto_reports, version.project) %>
-              <%= link_to l(:button_edit),
-                          edit_version_contract_work_path(version, work),
-                          class: 'icon icon-edit',
-                          remote: true %>
-              <%= link_to l(:button_delete),
-                          version_contract_work_path(version, work),
-                          method: :delete,
-                          class: 'icon icon-del',
-                          remote: true,
-                          data: { confirm: l(:text_are_you_sure) } %>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
+<table class="list contract-works">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th><%= l(:field_name) %></th>
+    <th><%= l(:field_hours) %></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @version.contract_works.each do |work| %>
+    <tr class="work <%= 'merged' if work.merged_hours.present? %>"
+        data-id="<%= work.id %>">
+      <td class="position"><%= work.position %></td>
+      <td class="name"><%= h work.name %></td>
+      <td class="hours <%= 'merged' if work.merged_hours.present? %>">
+        <%= h work.effective_hours %>
+      </td>
+      <td class="buttons">
+        <%= link_to l(:button_edit),
+                    edit_version_contract_work_path(@version, work),
+                    remote: true,
+                    class: 'icon icon-edit' %>
+        <%= link_to l(:button_delete),
+                    version_contract_work_path(@version, work),
+                    method: :delete,
+                    remote: true,
+                    class: 'icon icon-del',
+                    data: { confirm: l(:text_are_you_sure) } %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

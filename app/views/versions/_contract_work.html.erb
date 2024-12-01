@@ -1,0 +1,18 @@
+<!--# plugins/redmine_auto_report/app/views/versions/_contract_work.html.erb-->
+<tr class="work" id="work-<%= work.id %>">
+  <td class="position"><%= work.position %></td>
+  <td class="name"><%= h work.name %></td>
+  <td class="hours"><%= h work.planned_hours %></td>
+  <td class="buttons">
+    <%= link_to l(:button_edit),
+                edit_version_contract_work_path(@version, work),
+                class: 'icon icon-edit',
+                remote: true %>
+    <%= link_to l(:button_delete),
+                version_contract_work_path(@version, work),
+                method: :delete,
+                class: 'icon icon-del',
+                data: { confirm: l(:text_are_you_sure) },
+                remote: true %>
+  </td>
+</tr>

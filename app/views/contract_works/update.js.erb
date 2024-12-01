@@ -1,7 +1,6 @@
 <% if @work.valid? %>
-$("#work-form-row-<%= @work.id %>").replaceWith("<%= j render(partial: 'work', locals: { work: @work }) %>");
-$(".contract-works .total-hours").replaceWith("<%= j render(partial: 'total_hours') %>");
-$("#flash_notice").html("<%= j l(:notice_successful_update) %>").show();
+$("#contract-works").replaceWith("<%= j render partial: 'versions/contract_works_list' %>");
+$("#work-form-row-<%= @work.id %>").remove();
 <% else %>
-$("#work-form-row-<%= @work.id %> td").html("<%= j render("form") %>");
+$("#work-form-row-<%= @work.id %> td").html("<%= j render('form') %>");
 <% end %>
